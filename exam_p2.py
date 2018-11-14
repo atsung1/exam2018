@@ -12,8 +12,12 @@ def process_file(file_name):
     [["Mary","F",7065], ["Anna","F",2604],...]
 
     """
-    pass  # delete this line and replace with your code here
-
+    new_list = []
+    fp = open(file_name, "r")
+    for line in fp:
+        a = line.split(',')
+        new_list.append(a)
+    return new_list
 
 def total_births(year):
     """
@@ -21,8 +25,9 @@ def total_births(year):
     :param year: an integer, between 1880 and 2010
     :return: an integer, the total births of all the babies in that year
     """
-    pass  # delete this line and replace with your code here
-
+    text = 'babynames/yob' + str(year) + '.txt'
+    a = process_file(text)
+    return len(a)
 
 def proportion(name, gender, year):
     """
@@ -32,8 +37,11 @@ def proportion(name, gender, year):
     :param year: an integer, between 1880 and 2010
     :return: a floating number, the proportion of babies with the given name to total births in given year
     """
-    pass  # delete this line and replace with your code here
-
+    num = 0
+    for baby in process_file('babynames/yob' + str(year) + '.txt'):
+        if baby[0] == name and baby[1] == gender:
+            num += 1
+    return num/total_births(year)
 
 def highest_year(name, gender):
     """
@@ -42,12 +50,21 @@ def highest_year(name, gender):
     :param gender: a string, "F" or "M"
     :return: an integer, the year when the given name has the highest proportion over the years (among all the proportions of the same name in different years)
     """
-    pass  # delete this line and replace with your code here
-
+    highyear = 0
+    high = 0
+    for i in range(1880, 2011):
+        p = proportion(name, gender, i)
+        if p > high:
+            high = p
+            highyear = i
+    return highyear
 
 def main():
-    pass  # delete this line and replace with your code here
-
+    a = process_file('babynames/yob1880.txt')
+    # print(a)
+    print(total_births(1880))
+    print(proportion('Angela', 'F', 1880))
+    print(highest_year('Angela', 'F'))
 
 if __name__ == '__main__':
     main()
